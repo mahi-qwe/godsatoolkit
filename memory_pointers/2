@@ -1,0 +1,29 @@
+// Allocate slices/maps using new and make
+
+slice := make([]int, 5)      // creates a slice of length 5
+m := make(map[string]int)    // creates an empty map
+ch := make(chan int)         // creates a channel
+
+ptr := new(int)       // *int, points to zero value (0)
+*ptr = 10             // dereference and assign
+
+slicePtr := new([]int) // *([]int), points to nil slice
+
+// using make (recommended)
+s1 := make([]int, 3)  // s1 is []int
+s1[0] = 10            // works fine
+
+// using new (not recommended)
+s2 := new([]int)      // s2 is *[]int
+// (*s2)[0] = 10      // runtime panic: nil slice
+*s2 = make([]int, 3)  // now it's usable
+(*s2)[0] = 10
+
+m1 := make(map[string]int)
+m1["a"] = 1            // works fine
+
+m2 := new(map[string]int) // *map[string]int (pointer to nil)
+(*m2)["a"] = 1             // runtime panic unless you initialize:
+*m2 = make(map[string]int) // now it's usable
+(*m2)["a"] = 1
+
