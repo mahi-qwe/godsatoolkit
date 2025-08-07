@@ -1,0 +1,11 @@
+func findMax(arr []int) int {
+    max := arr[0]
+    for _, val := range arr {
+        if val > max {
+            max = val
+        }
+    }
+    return max
+}
+
+// it is O(n) complexity, bcz no: of operations depends on length of the slice/array, so it's linear.
