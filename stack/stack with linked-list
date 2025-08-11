@@ -1,0 +1,92 @@
+package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+// Node represents an element in the stack
+type Node struct {
+    data int
+    next *Node
+}
+
+// Stack implemented with linked list
+type LinkedListStack struct {
+    top *Node
+    size int
+}
+
+// Push - add element on top
+func (s *LinkedListStack) Push(value int) {
+    newNode := &Node{data: value, next: s.top}
+    s.top = newNode
+    s.size++
+}
+
+// Pop - remove and return top element
+func (s *LinkedListStack) Pop() (int, error) {
+    if s.top == nil {
+        return 0, errors.New("stack is empty")
+    }
+    value := s.top.data
+    s.top = s.top.next
+    s.size--
+    return value, nil
+}
+
+// Peek - get top element without removing
+func (s *LinkedListStack) Peek() (int, error) {
+    if s.top == nil {
+        return 0, errors.New("stack is empty")
+    }
+    return s.top.data, nil
+}
+
+// IsEmpty - check if stack is empty
+func (s *LinkedListStack) IsEmpty() bool {
+    return s.top == nil
+}
+
+// Size - return number of elements
+func (s *LinkedListStack) Size() int {
+    return s.size
+}
+
+// Helper: Print stack elements
+func (s *LinkedListStack) Print() {
+    current := s.top
+    fmt.Print("Stack (top -> bottom): ")
+    for current != nil {
+        fmt.Print(current.data, " ")
+        current = current.next
+    }
+    fmt.Println()
+}
+
+func main() {
+    stack := LinkedListStack{}
+
+    // Push elements
+    stack.Push(10)
+    stack.Push(20)
+    stack.Push(30)
+    stack.Print()
+
+    // Peek
+    top, _ := stack.Peek()
+    fmt.Println("Peek:", top)
+
+    // Pop
+    popped, _ := stack.Pop()
+    fmt.Println("Popped:", popped)
+
+    // After pop
+    stack.Print()
+
+    // Size
+    fmt.Println("Stack size:", stack.Size())
+
+    // IsEmpty check
+    fmt.Println("Is empty?", stack.IsEmpty())
+}
