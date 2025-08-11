@@ -1,0 +1,72 @@
+package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+// Stack structure
+type Stack struct {
+    items []int
+}
+
+// Push - add element to top
+func (s *Stack) Push(value int) {
+    s.items = append(s.items, value)
+}
+
+// Pop - remove and return top element
+func (s *Stack) Pop() (int, error) {
+    if len(s.items) == 0 {
+        return 0, errors.New("stack is empty")
+    }
+    topIndex := len(s.items) - 1
+    top := s.items[topIndex]
+    s.items = s.items[:topIndex] // remove last element
+    return top, nil
+}
+
+// Peek - get top element without removing
+func (s *Stack) Peek() (int, error) {
+    if len(s.items) == 0 {
+        return 0, errors.New("stack is empty")
+    }
+    return s.items[len(s.items)-1], nil
+}
+
+// IsEmpty - check if stack is empty
+func (s *Stack) IsEmpty() bool {
+    return len(s.items) == 0
+}
+
+// Size - return number of elements
+func (s *Stack) Size() int {
+    return len(s.items)
+}
+
+func main() {
+    stack := Stack{}
+
+    // Push elements
+    stack.Push(10)
+    stack.Push(20)
+    stack.Push(30)
+    fmt.Println("Stack:", stack.items)
+
+    // Peek top
+    top, _ := stack.Peek()
+    fmt.Println("Peek:", top)
+
+    // Pop element
+    popped, _ := stack.Pop()
+    fmt.Println("Popped:", popped)
+
+    // Stack after pop
+    fmt.Println("Stack after pop:", stack.items)
+
+    // Size
+    fmt.Println("Stack size:", stack.Size())
+
+    // IsEmpty check
+    fmt.Println("Is empty?", stack.IsEmpty())
+}
