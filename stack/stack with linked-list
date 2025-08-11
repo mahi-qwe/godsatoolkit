@@ -61,7 +61,7 @@ func (s *LinkedListStack) Print() {
         fmt.Print(current.data, " ")
         current = current.next
     }
-    fmt.Println()
+    fmt.Println("nil")
 }
 
 func main() {
