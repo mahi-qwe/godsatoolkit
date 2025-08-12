@@ -1,0 +1,87 @@
+package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+type Node struct {
+    data int
+    next *Node
+}
+
+type LinkedListQueue struct {
+    front *Node
+    rear  *Node
+    size  int
+}
+
+// Enqueue — add at rear
+func (q *LinkedListQueue) Enqueue(value int) {
+    newNode := &Node{data: value}
+    if q.rear == nil {
+        q.front = newNode
+        q.rear = newNode
+    } else {
+        q.rear.next = newNode
+        q.rear = newNode
+    }
+    q.size++
+}
+
+// Dequeue — remove from front
+func (q *LinkedListQueue) Dequeue() (int, error) {
+    if q.front == nil {
+        return 0, errors.New("queue is empty")
+    }
+    value := q.front.data
+    q.front = q.front.next
+    if q.front == nil {
+        q.rear = nil
+    }
+    q.size--
+    return value, nil
+}
+
+// Peek — look at front
+func (q *LinkedListQueue) Peek() (int, error) {
+    if q.front == nil {
+        return 0, errors.New("queue is empty")
+    }
+    return q.front.data, nil
+}
+
+// IsEmpty
+func (q *LinkedListQueue) IsEmpty() bool {
+    return q.front == nil
+}
+
+// Size
+func (q *LinkedListQueue) Size() int {
+    return q.size
+}
+
+func main() {
+    fmt.Println("=== Linked List Queue ===")
+    q := LinkedListQueue{}
+
+    q.Enqueue(10)
+    q.Enqueue(20)
+    q.Enqueue(30)
+    q.printQueue()
+
+    val, _ := q.Dequeue()
+    fmt.Println("Dequeued:", val)
+    q.printQueue()
+}
+
+// Helper method to print queue
+func (q *LinkedListQueue) printQueue() {
+    current := q.front
+    fmt.Print("Queue: ")
+    for current != nil {
+        fmt.Print(current.data, " ")
+        current = current.next
+    }
+    fmt.Println()
+}
