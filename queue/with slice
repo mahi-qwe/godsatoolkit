@@ -1,0 +1,60 @@
+package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+type ArrayQueue struct {
+    items []int
+}
+
+// Enqueue — add to rear
+func (q *ArrayQueue) Enqueue(value int) {
+    q.items = append(q.items, value)
+}
+
+// Dequeue — remove from front
+func (q *ArrayQueue) Dequeue() (int, error) {
+    if len(q.items) == 0 {
+        return 0, errors.New("queue is empty")
+    }
+    front := q.items[0]
+    q.items = q.items[1:] // remove first element
+    return front, nil
+}
+
+// Peek — look at front
+func (q *ArrayQueue) Peek() (int, error) {
+    if len(q.items) == 0 {
+        return 0, errors.New("queue is empty")
+    }
+    return q.items[0], nil
+}
+
+// IsEmpty
+func (q *ArrayQueue) IsEmpty() bool {
+    return len(q.items) == 0
+}
+
+// Size
+func (q *ArrayQueue) Size() int {
+    return len(q.items)
+}
+
+func main() {
+    fmt.Println("=== Array Queue ===")
+    q := ArrayQueue{}
+
+    q.Enqueue(10)
+    q.Enqueue(20)
+    q.Enqueue(30)
+    fmt.Println("Queue:", q.items)
+
+    front, _ := q.Dequeue()
+    fmt.Println("Dequeued:", front)
+    fmt.Println("Queue after Dequeue:", q.items)
+
+    peek, _ := q.Peek()
+    fmt.Println("Peek:", peek)
+}
